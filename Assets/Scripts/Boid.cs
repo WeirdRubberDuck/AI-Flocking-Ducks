@@ -4,64 +4,90 @@ using UnityEngine;
 
 public class Boid : MonoBehaviour {
 
-//	public float separationRadius = 2.0f;
-//	public float cohesionRadius = 10.0f;
-//	public float alignmentRadius = 2.0f;
 	public float neighborRadius = 5.0f;
-	public float speed = 0.5f;
+	public float speed = 0.1f;
 
 	private Rigidbody rb; 
-	private Vector3 course;
+	//private Vector3 course;
 	private Vector3 velocity; 
 
-	private int maxNeighbors = 10;
-	private GameObject[] neighbors;
+	private List<GameObject> neighbors;
 
-
-	// Use this for initialization
+	// Initialization
 	void Start () {
-		neighbors = new GameObject[maxNeighbors];
+		neighbors = new List<GameObject>();
 		rb = GetComponent<Rigidbody> ();
-
-		// Test: initial velocity
-		if (rb) rb.velocity = Vector3.right;
-
-		UpdateNeighbors ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		UpdateNeighbors ();
-		rb.velocity = Vector3.right;
 	}
 
-	// Find other boids close to the boid using collision
+	// Find other boids within a given radius using collision
 	void UpdateNeighbors() {
 
 		Collider[] neighborColliders = Physics.OverlapSphere (transform.position, neighborRadius);
 
-		for(int i = 0; i < neighborColliders.Length && i < maxNeighbors; ++i) {
-			
-			neighbors [i] = neighborColliders [i].gameObject;
+		for(int i = 0; i < neighborColliders.Length; ++i) {
+            GameObject neighbor = neighborColliders[i].gameObject;
+            if (neighbor.CompareTag("Boid") && neighbor != this.gameObject)
+                neighbors.Add(neighborColliders[i].gameObject);
 		}
 	}
 
-	void Flocking() {
-		// Sum result of cehesion 
-	}
+	public void Flock() {
+
+        Debug.Log("Flocking...");
+
+        Vector3 v1 = Cohesion();
+        Vector3 v2 = Separation();
+        Vector3 v3 = Alignment();
+
+        velocity = v1 + v2 + v3;
+
+        Debug.Log(velocity);
+
+        float step = speed * Time.deltaTime ;
+        transform.position = Vector3.MoveTowards(transform.position, velocity, step);
+    }
 
 	Vector3 Cohesion() {
-		Vector3 goal = Vector3.zero;
 
-		// TEST IF NO NEIGHBORS?
+        if(!(neighbors.Count > 0)) {
+            // TODO: Default behaviour if no neighbors
+            return Vector3.zero;
+        }
 
-		foreach(GameObject buddy in neighbors) {
-			goal += buddy.transform.position;
+        // Compute average goal
+        Vector3 goal = Vector3.zero;
+        foreach (GameObject buddy in neighbors) {
+			goal += buddy.transform.position;           
 		}
-		// Compute average position
-		goal /= neighbors.Length;
-		return goal;
+		goal /= neighbors.Count;
+		return goal * 0.001f; // TODO: Make this factor a variable
 	}
+
+    Vector3 Separation()
+    {
+        Vector3 goal = Vector3.zero;
+        foreach (GameObject buddy in neighbors)
+        {
+            float distance = Vector3.Distance(buddy.transform.position, transform.position);
+            if (distance < 1.0f) // TODO: Make factor a variable
+            {
+                goal -= buddy.transform.position - transform.position;
+            }
+        }
+        return goal;
+    }
+
+    Vector3 Alignment()
+    {
+        Vector3 goal = Vector3.zero;
+        // TODO: Implement
+        return goal;
+    }
 
 
 }

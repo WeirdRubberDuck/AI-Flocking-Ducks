@@ -37,14 +37,7 @@ public class BoidController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		foreach (GameObject boid in boids) {
-			
-			// Separation
-
-			// Cohesion
-
-			// Alignment
-
-			// Update position
+            boid.GetComponent<Boid>().Flock();	
 		}
 	}
 }

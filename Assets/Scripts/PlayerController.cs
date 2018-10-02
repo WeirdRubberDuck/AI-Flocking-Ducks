@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	public float speed; 
+	public float speed = 10.0f; 
 	private Rigidbody rb;
 
 	// Called on the first frame
@@ -12,12 +12,6 @@ public class PlayerController : MonoBehaviour {
 	{
 		rb = GetComponent<Rigidbody> ();
 	}
-
-    // Called before rendering a frame
-//    void Update()
-//    {
-//        
-//    }
 
     // Called before performing any physics calculations
     void FixedUpdate()
