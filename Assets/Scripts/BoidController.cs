@@ -23,7 +23,7 @@ public class BoidController : MonoBehaviour {
 		// Initialize boid positions
 		for (int i = 0; i < flockSize; i++) {
 			Vector3 pos = new Vector3 (Random.Range(-1.0f, 1.0f) * spawnRadius, 0.5f, Random.Range(-1.0f, 1.0f) * spawnRadius); 
-			
+
 			GameObject boid = Instantiate (boidPrefab, transform.position, transform.rotation) as GameObject;
 			boid.transform.parent = transform;
 			boid.transform.localPosition = pos;

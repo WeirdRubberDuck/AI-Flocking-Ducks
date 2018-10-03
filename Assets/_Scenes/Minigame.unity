@@ -285,8 +285,8 @@ MonoBehaviour:
   minVelocity: 5
   maxVelocity: 20
   flockSize: 15
-  spawnRadius: 10
-  boidPrefab: {fileID: 1045129333922354, guid: 9cbce34371548414d8c1d46e7a68aec9, type: 2}
+  spawnRadius: 15
+  boidPrefab: {fileID: 1748619134063944, guid: e5241dbbc950ac3458e16cdbe1cd3e76, type: 2}
   flockCenter: {x: 0, y: 0, z: 0}
   flockVelocity: {x: 0, y: 0, z: 0}
 --- !u!4 &267184105
