@@ -80,10 +80,12 @@ public class Boid : MonoBehaviour {
             avgGroupPos /= neighbors.Count;
             velocityDiff /= neighbors.Count;
 
+            Debug.Log("avgGroupPos: " + avgGroupPos + " \n");
+
             // TODO: Make constants for the factor
-            cohesionVec = (avgGroupPos - transform.position) * 0.002f;
+           cohesionVec = (avgGroupPos - transform.position) * 0.002f;
             separationVec = separationVec * 1;
-            alignmentVec = (velocityDiff - transform.position) * 0.05f;
+            alignmentVec = (velocityDiff - transform.position) * 0.005f;
         }
 
         Debug.Log( neighbors.Count + "Neighbors \n"
