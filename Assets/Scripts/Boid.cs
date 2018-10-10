@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class Boid : MonoBehaviour {
 
-	public float neighborRadius = 5.0f;
-	public float speed = 0.5f;
+	public float speedFactor = 0.5f;
+    public float maxSpeed = 2.0f;
+    public Vector3 velocity;
+
+    public float cohesionFactor = 0.01f;
+    public float separationFactor = 0.5f;
+    public float alignmentFactor = 0.01f;
+
+    public float neighborRadius = 5.0f;
+    public float separationDistance = 1.5f;
 
 	private Rigidbody rb; 
-	public Vector3 velocity; 
-
 	private List<GameObject> neighbors;
 
 	// Initialization
@@ -39,10 +45,6 @@ public class Boid : MonoBehaviour {
 			
 	}
 
-    public Vector3 GetVelocity()
-    {
-        return velocity;
-    }
 
     // Flocking behaviour. Three rules:
     // Cohesion:    Steer to move toward the average position of local flockmates
@@ -68,43 +70,41 @@ public class Boid : MonoBehaviour {
 
                 // Separation contribution
                 float distance = Vector3.Distance(buddy.transform.position, transform.position);
-                if (distance < 1.5f) // TODO: Make factor a variable
-                {
-                    separationVec += (transform.position - buddy.transform.position); // Move boid away from buddy
+                if (distance < separationDistance) {
+                    // Move boid away from buddy
+                    separationVec += (transform.position - buddy.transform.position); 
                 }
 
                 // Alignment contribution
-                velocityDiff += (buddy.GetComponent<Boid>().GetVelocity() - velocity);
+                velocityDiff += (buddy.GetComponent<Boid>().velocity - velocity);
             }
 
             avgGroupPos /= neighbors.Count;
             velocityDiff /= neighbors.Count;
 
-            Debug.Log("avgGroupPos: " + avgGroupPos + " \n");
-
-            // TODO: Make constants for the factor
-           cohesionVec = (avgGroupPos - transform.position) * 0.002f;
-            separationVec = separationVec * 1;
-            alignmentVec = (velocityDiff - transform.position) * 0.005f;
+            cohesionVec = (avgGroupPos - transform.position) * cohesionFactor;
+            separationVec = separationVec * separationFactor;
+            alignmentVec = velocityDiff * alignmentFactor;
         }
 
-        Debug.Log( neighbors.Count + "Neighbors \n"
-                + "Cohesion  : " + cohesionVec.ToString("F4") + "\n"
-                + "Separation: " + separationVec.ToString("F4") + "\n"
-                + "Alignment : " + alignmentVec.ToString("F4") + "\n");
-
-        // PROBLEM!! Once they form a group they start moving back and forth.. Why??
-
+        // Add contributions
         velocity = velocity + cohesionVec + separationVec + alignmentVec;
         velocity.y = 0.0f; // Don't want to move in y
 
-        float step = speed * Time.deltaTime ;
+        // Limit to max velocity
+        if (Vector3.Magnitude(velocity) > maxSpeed) {
+            velocity = Vector3.ClampMagnitude(velocity, maxSpeed); 
+        }
+            
+        float step = speedFactor * Time.deltaTime ;
 
-		transform.position += velocity * step;
+        // Update posiiton and rotation
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, velocity, 5*step, 0.0f); // Rotation speed: 5 * speedFactor
 
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, velocity, 5*step, 0.0f);
-        Debug.DrawRay(transform.position, newDir, Color.red); // Test: to see front of 
+        // Test: Draw a ray for the moving direction
+        Debug.DrawRay(transform.position, newDir, Color.red); 
 
+        transform.position += velocity * step;
         transform.rotation = Quaternion.LookRotation(newDir);
     }
 
