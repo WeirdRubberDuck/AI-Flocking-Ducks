@@ -121,10 +121,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedFactor: 0.6
-  maxSpeed: 2
+  maxSpeed: 3
   velocity: {x: 0, y: 0, z: 0}
   cohesionFactor: 0.01
-  separationFactor: 1
-  alignmentFactor: 0.007
+  separationFactor: 0.8
+  alignmentFactor: 0.01
   neighborRadius: 10
-  separationDistance: 1.5
+  separationDistance: 1.8

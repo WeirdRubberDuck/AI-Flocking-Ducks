@@ -52,13 +52,13 @@ public class Boid : MonoBehaviour {
             if (neighbor.CompareTag("Food"))
             {
                 Vector3 vecToFood = (neighbor.transform.position - transform.position);
-                velocity = velocity + vecToFood * 0.2f; // todo: make variable for food attraction factor
+                velocity = velocity + vecToFood * 0.1f; // todo: make variable for food attraction factor
             }
 
             // If boid see player - flee
             if (neighbor.CompareTag("Player"))
             {     
-                float dangerMaxDistance = 4.0f;
+                float dangerMaxDistance = 6.0f;
                 float dangerScale = (1 - (distance / dangerMaxDistance));   // Scale depending on distance
 
                 if (distance < dangerMaxDistance)
@@ -66,7 +66,7 @@ public class Boid : MonoBehaviour {
                     // TODO: set velocity based on distance (faster when closer, etc) 
 
                     Vector3 vecFromNeighbor = (transform.position - neighbor.transform.position);           
-                    velocity = velocity + vecFromNeighbor * dangerScale *  0.8f; // TODO: Make variable for fleeing
+                    velocity = velocity + vecFromNeighbor * dangerScale *  1.5f; // TODO: Make variable for fleeing
 
                     Move();
                 }
@@ -91,7 +91,7 @@ public class Boid : MonoBehaviour {
         // If no neighbors, walk randomly
         if (neighbors.Count == 0)
         {
-            velocity += Vector3.zero;  new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
+            velocity += new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
             Move();
             return;
         }
