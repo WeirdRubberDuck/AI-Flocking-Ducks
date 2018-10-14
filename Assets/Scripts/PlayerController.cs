@@ -7,8 +7,11 @@ public class PlayerController : MonoBehaviour {
 	public float speed = 10.0f; 
 	private Rigidbody rb;
 
-	// Called on the first frame
-	void Start() 
+    public GameObject foodPrefab;       
+
+
+    // Called on the first frame
+    void Start() 
 	{
 		rb = GetComponent<Rigidbody> ();
 	}
@@ -22,5 +25,14 @@ public class PlayerController : MonoBehaviour {
 		Vector3 movement = new Vector3 (moveHorizontal, 0.0f, moveVertical);
 
 		rb.AddForce (movement * speed);
+    }
+
+    private void Update()
+    {
+        // Create food when pressing space
+        if (Input.GetKeyDown("space"))
+        {
+            GameObject boid = Instantiate(foodPrefab, transform.position, transform.rotation) as GameObject;
+        }
     }
 }

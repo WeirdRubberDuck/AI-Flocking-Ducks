@@ -465,7 +465,7 @@ PlayerSettings:
     Collab: 0
     ErrorHub: 0
     Hub: 0
-    UNet: 1
+    UNet: 0
   cloudProjectId: 99c43309-39ea-406e-8579-fcf5858f4ec8
   projectName: Roll a Ball
   organizationId: weirdrubberduck

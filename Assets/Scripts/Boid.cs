@@ -24,15 +24,16 @@ public class Boid : MonoBehaviour {
 		rb = GetComponent<Rigidbody> ();
 
         // Set initial velocity
-        velocity = Vector3.zero; //new Vector3(Random.Range(-2.0f, 2.0f), 0.0f, Random.Range(-2.0f, 2.0f));
+        velocity = Vector3.zero; 
 	}
 
-	// Find other boids within a given radius using collision with a sphere
+	
 	void UpdateNeighbors() {
 
 		neighbors.Clear ();
 
-		Collider[] neighborColliders = Physics.OverlapSphere (transform.position, neighborRadius);
+        // Find other boids within a given radius using collision with a sphere
+        Collider[] neighborColliders = Physics.OverlapSphere (transform.position, neighborRadius);
 
 		for(int i = 0; i < neighborColliders.Length; ++i)
         {
@@ -40,9 +41,38 @@ public class Boid : MonoBehaviour {
 
             // Make sure the object is a boid and not itself
             if (neighbor.CompareTag("Boid") && neighbor != this.gameObject)
+            {
                 neighbors.Add(neighborColliders[i].gameObject);
-		}
-			
+                continue;
+            }
+
+            float distance = Vector3.Distance(neighbor.transform.position, transform.position);
+
+            // if boid see food - attract to it
+            if (neighbor.CompareTag("Food"))
+            {
+                Vector3 vecToFood = (neighbor.transform.position - transform.position);
+                velocity = velocity + vecToFood * 0.2f; // todo: make variable for food attraction factor
+            }
+
+            // If boid see player - flee
+            if (neighbor.CompareTag("Player"))
+            {     
+                float dangerMaxDistance = 4.0f;
+                float dangerScale = (1 - (distance / dangerMaxDistance));   // Scale depending on distance
+
+                if (distance < dangerMaxDistance)
+                {
+                    // TODO: set velocity based on distance (faster when closer, etc) 
+
+                    Vector3 vecFromNeighbor = (transform.position - neighbor.transform.position);           
+                    velocity = velocity + vecFromNeighbor * dangerScale *  0.8f; // TODO: Make variable for fleeing
+
+                    Move();
+                }
+                
+            }
+        }
 	}
 
 
@@ -58,51 +88,63 @@ public class Boid : MonoBehaviour {
         Vector3 separationVec = Vector3.zero;
         Vector3 alignmentVec = Vector3.zero;
 
-        if (neighbors.Count > 0)
+        // If no neighbors, walk randomly
+        if (neighbors.Count == 0)
         {
-            Vector3 avgGroupPos = Vector3.zero;
-            Vector3 velocityDiff = Vector3.zero;
+            velocity += Vector3.zero;  new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
+            Move();
+            return;
+        }
 
-            foreach (GameObject buddy in neighbors)
-            {
-                // Cohesion contribution:
-                avgGroupPos += buddy.transform.position;
+        Vector3 avgGroupPos = Vector3.zero;
+        Vector3 velocityDiff = Vector3.zero;
 
-                // Separation contribution
-                float distance = Vector3.Distance(buddy.transform.position, transform.position);
-                if (distance < separationDistance) {
-                    // Move boid away from buddy
-                    separationVec += (transform.position - buddy.transform.position); 
-                }
+        foreach (GameObject buddy in neighbors)
+        {
+            // Cohesion contribution:
+            avgGroupPos += buddy.transform.position;
 
-                // Alignment contribution
-                velocityDiff += (buddy.GetComponent<Boid>().velocity - velocity);
+            // Separation contribution
+            float distance = Vector3.Distance(buddy.transform.position, transform.position);
+            if (distance < separationDistance) {
+                // Move boid away from buddy
+                separationVec += (transform.position - buddy.transform.position); 
             }
 
-            avgGroupPos /= neighbors.Count;
-            velocityDiff /= neighbors.Count;
-
-            cohesionVec = (avgGroupPos - transform.position) * cohesionFactor;
-            separationVec = separationVec * separationFactor;
-            alignmentVec = velocityDiff * alignmentFactor;
+            // Alignment contribution
+            velocityDiff += (buddy.GetComponent<Boid>().velocity - velocity);
         }
+
+        avgGroupPos /= neighbors.Count;
+        velocityDiff /= neighbors.Count;
+
+        cohesionVec = (avgGroupPos - transform.position) * cohesionFactor;
+        separationVec = separationVec * separationFactor;
+        alignmentVec = velocityDiff * alignmentFactor;
+  
 
         // Add contributions
-        velocity = velocity + cohesionVec + separationVec + alignmentVec;
+        velocity += cohesionVec + separationVec + alignmentVec;
         velocity.y = 0.0f; // Don't want to move in y
 
-        // Limit to max velocity
-        if (Vector3.Magnitude(velocity) > maxSpeed) {
-            velocity = Vector3.ClampMagnitude(velocity, maxSpeed); 
-        }
-            
-        float step = speedFactor * Time.deltaTime ;
+        Move();
+    }
 
-        // Update posiiton and rotation
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, velocity, 5*step, 0.0f); // Rotation speed: 5 * speedFactor
+    private void Move()
+    {
+        // Limit to max velocity
+        if (Vector3.Magnitude(velocity) > maxSpeed)
+        {
+            velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+        }
+
+        float step = speedFactor * Time.deltaTime; 
+
+        // Update position and rotation
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, velocity, 3 * step, 0.0f); // Rotation speed: k * speedFactor
 
         // Test: Draw a ray for the moving direction
-        Debug.DrawRay(transform.position, newDir, Color.red); 
+        Debug.DrawRay(transform.position, newDir, Color.red);
 
         transform.position += velocity * step;
         transform.rotation = Quaternion.LookRotation(newDir);

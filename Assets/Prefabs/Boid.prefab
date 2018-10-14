@@ -120,6 +120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0f8e561e8268f49a5724e979c79d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighborRadius: 10
-  speed: 0.2
+  speedFactor: 0.6
+  maxSpeed: 2
   velocity: {x: 0, y: 0, z: 0}
+  cohesionFactor: 0.01
+  separationFactor: 1
+  alignmentFactor: 0.007
+  neighborRadius: 10
+  separationDistance: 1.5

@@ -27,9 +27,6 @@ public class BoidController : MonoBehaviour {
 			GameObject boid = Instantiate (boidPrefab, transform.position, transform.rotation) as GameObject;
 			boid.transform.parent = transform;
 			boid.transform.localPosition = pos;
-			// set controller?
-
-			//boid.GetComponent<Boid>()
 			boids[i] = boid;
 		}
 	}
