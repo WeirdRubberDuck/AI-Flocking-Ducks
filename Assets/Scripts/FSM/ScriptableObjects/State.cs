@@ -12,6 +12,7 @@ public class State : ScriptableObject {
     public void UpdateState(StateController controller)
     {
         DoActions(controller);
+        CheckTransitions(controller);
     }
 
     private void DoActions(StateController controller)
