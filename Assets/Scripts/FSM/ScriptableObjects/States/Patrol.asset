@@ -11,5 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 036354f777338154797be7ec0aec0698, type: 3}
   m_Name: Patrol
   m_EditorClassIdentifier: 
-  actions: []
-  sceneGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  actions:
+  - {fileID: 11400000, guid: 19c25675a54f79842ada4d8ff3b91c32, type: 2}
+  transitions:
+  - decision: {fileID: 11400000, guid: a23315fced0c64c4eb3e1fb8fe466a38, type: 2}
+    trueState: {fileID: 11400000, guid: 860eac735f5c96b428e2993cbe1b913e, type: 2}
+    falseState: {fileID: 11400000, guid: 5a9c8378ff10f824fbb2bf8107453cf9, type: 2}
+  sceneGizmoColor: {r: 0, g: 1, b: 0.2965517, a: 1}

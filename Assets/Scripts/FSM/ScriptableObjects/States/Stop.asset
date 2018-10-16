@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions: []
   transitions: []
-  sceneGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  sceneGizmoColor: {r: 0.9705882, g: 0, b: 0, a: 1}

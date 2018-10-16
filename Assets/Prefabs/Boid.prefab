@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23196990976424278}
   - component: {fileID: 114471178020817532}
   - component: {fileID: 54630538329124496}
+  - component: {fileID: 114093489036972680}
   m_Layer: 0
   m_Name: Boid
   m_TagString: Boid
@@ -109,6 +110,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114093489036972680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1748619134063944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd0e0c84a1dcf940a93c80378fe50a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wayPointList:
+  - {x: 55.106304, y: 1e-45, z: 4e-45}
+  - {x: 55.106304, y: 1e-45, z: 4e-45}
+  nextWayPoint: 0
+  currentState: {fileID: 11400000, guid: c8c31f0d54a517a4f82b43c714373248, type: 2}
+  remainState: {fileID: 11400000, guid: 5a9c8378ff10f824fbb2bf8107453cf9, type: 2}
 --- !u!114 &114471178020817532
 MonoBehaviour:
   m_ObjectHideFlags: 1
