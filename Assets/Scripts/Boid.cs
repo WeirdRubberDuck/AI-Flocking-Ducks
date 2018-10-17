@@ -15,7 +15,10 @@ public class Boid : MonoBehaviour {
     public float neighborRadius = 5.0f;
     public float separationDistance = 1.5f;
 
-	private Rigidbody rb; 
+    [HideInInspector] public Transform enemyPosition;
+    [HideInInspector] public Transform foodPosition;
+
+    private Rigidbody rb; 
 	private List<GameObject> neighbors;
 
 	// Initialization
@@ -23,12 +26,20 @@ public class Boid : MonoBehaviour {
 		neighbors = new List<GameObject>();
 		rb = GetComponent<Rigidbody> ();
 
+        enemyPosition = null;
+        foodPosition = null;
+
         // Set initial velocity
         velocity = Vector3.zero; 
 	}
 
-	
-	void UpdateNeighbors() {
+    private void Update()
+    {
+        UpdateNeighbors();
+    }
+
+
+    void UpdateNeighbors() {
 
 		neighbors.Clear ();
 
@@ -51,30 +62,16 @@ public class Boid : MonoBehaviour {
             // if boid see food - attract to it
             if (neighbor.CompareTag("Food"))
             {
-                Vector3 vecToFood = (neighbor.transform.position - transform.position);
-                velocity = velocity + vecToFood * 0.1f; // todo: make variable for food attraction factor
+                foodPosition = neighbor.transform; 
             }
 
             // If boid see player - flee
             if (neighbor.CompareTag("Player"))
-            {     
-                float dangerMaxDistance = 6.0f;
-                float dangerScale = (1 - (distance / dangerMaxDistance));   // Scale depending on distance
-
-                if (distance < dangerMaxDistance)
-                {
-                    // TODO: set velocity based on distance (faster when closer, etc) 
-
-                    Vector3 vecFromNeighbor = (transform.position - neighbor.transform.position);           
-                    velocity = velocity + vecFromNeighbor * dangerScale *  1.5f; // TODO: Make variable for fleeing
-
-                    Move();
-                }
-                
+            {
+                enemyPosition = neighbor.transform;
             }
         }
 	}
-
 
     // Flocking behaviour. Three rules:
     // Cohesion:    Steer to move toward the average position of local flockmates
@@ -82,7 +79,7 @@ public class Boid : MonoBehaviour {
     // Alignment:   Steer towards the average heading of local flockmates
     public void Flock() {
 
-		UpdateNeighbors ();
+		//UpdateNeighbors ();
 
         Vector3 cohesionVec = Vector3.zero;
         Vector3 separationVec = Vector3.zero;
@@ -125,13 +122,26 @@ public class Boid : MonoBehaviour {
 
         // Add contributions
         velocity += cohesionVec + separationVec + alignmentVec;
-        velocity.y = 0.0f; // Don't want to move in y
 
+        Move();
+    }
+
+    public void Stop()
+    {
+        velocity = Vector3.zero;
+        Move();
+    }
+
+    public void Move(Vector3 vecToGoal)
+    {
+        velocity += vecToGoal; // todo: make variable for factor
         Move();
     }
 
     private void Move()
     {
+        velocity.y = 0.0f; // Don't want to move in y 
+
         // Limit to max velocity
         if (Vector3.Magnitude(velocity) > maxSpeed)
         {

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036354f777338154797be7ec0aec0698, type: 3}
+  m_Name: Flock
+  m_EditorClassIdentifier: 
+  actions:
+  - {fileID: 11400000, guid: 633c86450e28ea646ab55aa8a287d29f, type: 2}
+  transitions:
+  - decision: {fileID: 11400000, guid: 38bd739f1c53a744d9c243d673fdc25b, type: 2}
+    trueState: {fileID: 11400000, guid: d0ab98a06fbefd3429ac2c93594241b4, type: 2}
+    falseState: {fileID: 11400000, guid: 5a9c8378ff10f824fbb2bf8107453cf9, type: 2}
+  - decision: {fileID: 11400000, guid: 6284b4a3ad8d3284295ba96580366210, type: 2}
+    trueState: {fileID: 11400000, guid: e77fdc51a48aa9c42b9b677ba97f47c0, type: 2}
+    falseState: {fileID: 11400000, guid: 5a9c8378ff10f824fbb2bf8107453cf9, type: 2}
+  sceneGizmoColor: {r: 0, g: 1, b: 0.060247898, a: 1}

@@ -2,24 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// For NavMeshAgent
-using UnityEngine.AI;
-
 public class StateController : MonoBehaviour {
 
     // For testing - remove later
-    [HideInInspector]
-    public List<Vector3> wayPointList;
-    [HideInInspector]
-    public int nextWayPoint;
+    [HideInInspector] public List<Vector3> wayPointList;
+    [HideInInspector] public int nextWayPoint;
+    [HideInInspector] public Boid boid;
 
     public State currentState;
     public State remainState;
 
-    void Awake()
+    void Start()
     {
-        wayPointList[0] = Vector3.zero;
-        wayPointList[1] = new Vector3(5.0f, 0.5f, 5.0f);
+        boid = GetComponent<Boid>();
     }
 
     private void Update()

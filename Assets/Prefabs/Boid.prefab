@@ -8,15 +8,15 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
+  m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1748619134063944}
-  m_IsPrefabParent: 1
+  m_IsPrefabAsset: 1
 --- !u!1 &1748619134063944
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4853482003808578}
   - component: {fileID: 33524684397509230}
@@ -35,7 +35,7 @@ GameObject:
 --- !u!4 &4853482003808578
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1748619134063944}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -48,15 +48,17 @@ Transform:
 --- !u!23 &23196990976424278
 MeshRenderer:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1748619134063944}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 1d956f13c41489c428cdfce09d449dd5, type: 2}
   m_StaticBatchInfo:
@@ -69,24 +71,26 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33524684397509230
 MeshFilter:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1748619134063944}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &54630538329124496
 Rigidbody:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1748619134063944}
   serializedVersion: 2
@@ -101,7 +105,7 @@ Rigidbody:
 --- !u!65 &65399498481105360
 BoxCollider:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1748619134063944}
   m_Material: {fileID: 0}
@@ -113,7 +117,7 @@ BoxCollider:
 --- !u!114 &114093489036972680
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1748619134063944}
   m_Enabled: 1
@@ -125,12 +129,13 @@ MonoBehaviour:
   - {x: 55.106304, y: 1e-45, z: 4e-45}
   - {x: 55.106304, y: 1e-45, z: 4e-45}
   nextWayPoint: 0
-  currentState: {fileID: 11400000, guid: c8c31f0d54a517a4f82b43c714373248, type: 2}
+  boid: {fileID: 0}
+  currentState: {fileID: 11400000, guid: 2085dd9e0748457489521292d74f04ad, type: 2}
   remainState: {fileID: 11400000, guid: 5a9c8378ff10f824fbb2bf8107453cf9, type: 2}
 --- !u!114 &114471178020817532
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1748619134063944}
   m_Enabled: 1
@@ -138,11 +143,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0f8e561e8268f49a5724e979c79d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedFactor: 0.6
+  speedFactor: 1
   maxSpeed: 3
   velocity: {x: 0, y: 0, z: 0}
   cohesionFactor: 0.01
-  separationFactor: 0.8
-  alignmentFactor: 0.01
-  neighborRadius: 10
+  separationFactor: 0.5
+  alignmentFactor: 0.05
+  neighborRadius: 5
   separationDistance: 1.8
+  enemyPosition: {fileID: 0}
+  foodPosition: {fileID: 0}

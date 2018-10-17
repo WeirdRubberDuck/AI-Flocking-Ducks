@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036354f777338154797be7ec0aec0698, type: 3}
+  m_Name: Flee
+  m_EditorClassIdentifier: 
+  actions:
+  - {fileID: 11400000, guid: d742aa46337808348aec1b670e69c836, type: 2}
+  transitions:
+  - decision: {fileID: 11400000, guid: 6284b4a3ad8d3284295ba96580366210, type: 2}
+    trueState: {fileID: 11400000, guid: 5a9c8378ff10f824fbb2bf8107453cf9, type: 2}
+    falseState: {fileID: 11400000, guid: 2085dd9e0748457489521292d74f04ad, type: 2}
+  sceneGizmoColor: {r: 0.9528302, g: 0, b: 0, a: 1}
