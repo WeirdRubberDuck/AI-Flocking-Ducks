@@ -16,7 +16,6 @@ public class Boid : MonoBehaviour {
     public float separationDistance = 1.5f;
 
     [HideInInspector] public Transform enemyPosition;
-    [HideInInspector] public Transform foodPosition;
 
     private Rigidbody rb; 
 	private List<GameObject> neighbors;
@@ -27,7 +26,6 @@ public class Boid : MonoBehaviour {
 		rb = GetComponent<Rigidbody> ();
 
         enemyPosition = null;
-        foodPosition = null;
 
         // Set initial velocity
         velocity = Vector3.zero; 
@@ -58,12 +56,6 @@ public class Boid : MonoBehaviour {
             }
 
             float distance = Vector3.Distance(neighbor.transform.position, transform.position);
-
-            // if boid see food - attract to it
-            if (neighbor.CompareTag("Food"))
-            {
-                foodPosition = neighbor.transform; 
-            }
 
             // If boid see player - flee
             if (neighbor.CompareTag("Player"))
@@ -132,10 +124,10 @@ public class Boid : MonoBehaviour {
         Move();
     }
 
-    public void Move(Vector3 vecToGoal)
+    public void MoveByVector(Vector3 vecToGoal)
     {
         velocity += vecToGoal; // todo: make variable for factor
-        Move();
+        Flock();
     }
 
     private void Move()

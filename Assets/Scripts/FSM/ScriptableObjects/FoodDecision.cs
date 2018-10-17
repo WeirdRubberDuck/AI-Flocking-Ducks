@@ -7,8 +7,12 @@ public class FoodDecision : Decision
 {
     public override bool Decide(StateController controller)
     {
-        // If food nearby, return true
-        if(controller.boid.foodPosition != null) return true;
+        GameObject food = GameObject.FindWithTag("Food");
+
+        if (food)
+        {
+            return true;
+        }
 
         return false;
     }

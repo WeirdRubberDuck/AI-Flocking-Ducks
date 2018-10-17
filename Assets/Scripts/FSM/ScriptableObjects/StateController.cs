@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class StateController : MonoBehaviour {
 
-    // For testing - remove later
-    [HideInInspector] public List<Vector3> wayPointList;
-    [HideInInspector] public int nextWayPoint;
+    [HideInInspector] public FoodSource currentFoodSource;
     [HideInInspector] public Boid boid;
 
     public State currentState;
@@ -15,6 +13,7 @@ public class StateController : MonoBehaviour {
     void Start()
     {
         boid = GetComponent<Boid>();
+        currentFoodSource = null;
     }
 
     private void Update()
@@ -41,5 +40,26 @@ public class StateController : MonoBehaviour {
         {
             currentState = nextState;
         }
+    }
+
+    public GameObject FindClosestFood()
+    {
+        GameObject[] foods = GameObject.FindGameObjectsWithTag("Food");
+
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+        foreach (GameObject food in foods)
+        {
+            Vector3 diff = food.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = food;
+                distance = curDistance;
+            }
+        }
+
+        return closest;
     }
 }

@@ -15,6 +15,6 @@ public class FleeAction : Action
 
         Vector3 vecFromEnemy = Vector3.Normalize(boidPos - enemyPos);
 
-        controller.boid.Move(dangerFactor * vecFromEnemy);
+        controller.boid.MoveByVector(dangerFactor * vecFromEnemy);
     }
 }
