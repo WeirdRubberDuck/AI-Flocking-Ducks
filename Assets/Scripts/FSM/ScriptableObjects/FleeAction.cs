@@ -8,7 +8,7 @@ public class FleeAction : Action
     public override void Act(StateController controller)
     {
         Vector3 boidPos = controller.transform.position;
-        Vector3 enemyPos = controller.boid.enemyPosition.position;
+        Vector3 enemyPos = controller.player.transform.position;
 
         float distance = Vector3.Distance(boidPos, enemyPos);
         float dangerFactor = 1 - (distance / 6.0f);

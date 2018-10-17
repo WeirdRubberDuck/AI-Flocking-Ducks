@@ -820,13 +820,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9ecab38baaf8f4f95b471e88f105d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minVelocity: 5
-  maxVelocity: 20
   flockSize: 15
   spawnRadius: 15
-  boidPrefab: {fileID: 1748619134063944, guid: e5241dbbc950ac3458e16cdbe1cd3e76, type: 2}
-  flockCenter: {x: 0, y: 0, z: 0}
-  flockVelocity: {x: 0, y: 0, z: 0}
+  boidPrefab: {fileID: 1569470040408700, guid: 0ede982496f7d4b4bb0230a1098c33f9, type: 2}
 --- !u!4 &267184105
 Transform:
   m_ObjectHideFlags: 0

@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
     private void Update()
     {
         // Create food when pressing space
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown(KeyCode.Space)) 
         {
             GameObject boid = Instantiate(foodPrefab, transform.position, transform.rotation) as GameObject;
         }

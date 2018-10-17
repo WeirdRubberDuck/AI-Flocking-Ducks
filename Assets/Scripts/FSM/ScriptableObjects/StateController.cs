@@ -6,14 +6,18 @@ public class StateController : MonoBehaviour {
 
     [HideInInspector] public FoodSource currentFoodSource;
     [HideInInspector] public Boid boid;
+    [HideInInspector] public GameObject player;
 
     public State currentState;
     public State remainState;
+
+
 
     void Start()
     {
         boid = GetComponent<Boid>();
         currentFoodSource = null;
+        player = GameObject.FindWithTag("Player");
     }
 
     private void Update()

@@ -7,21 +7,32 @@ public class FleeDecision : Decision
 {
     public override bool Decide(StateController controller)
     {
-        if (controller.boid.enemyPosition) {
-            Vector3 enemyPos = controller.boid.enemyPosition.position;
-            Vector3 boidPos = controller.transform.position;
-            float distance = Vector3.Distance(enemyPos, boidPos);
+        return Danger(controller);
+    }
 
-            // If enemy is close, return true
+    bool Danger(StateController controller)
+    {
+        if(controller.player)
+        {
+            Vector3 enemyPos = controller.player.transform.position;
+            Vector3 enemyVelocity = controller.player.GetComponent<Rigidbody>().velocity;
+            Vector3 boidPos = controller.transform.position;
+
+            float distance = Vector3.Distance(enemyPos, boidPos);
+            float nextDistance = Vector3.Distance(enemyPos + enemyVelocity * Time.deltaTime, boidPos);
+            
             float dangerMaxDistance = 6.0f;
 
-            // TODO: Check if enemny if moving towards me
+            // If enemy is close and enemy moving towards the boid, return true
             if (distance < dangerMaxDistance)
             {
-                return true;
+                // Check if enemy is moving towards me
+                if (nextDistance < distance)
+                    return true;
             }
         }
 
         return false;
+
     }
 }
