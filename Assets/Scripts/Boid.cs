@@ -15,23 +15,15 @@ public class Boid : MonoBehaviour {
     public float neighborRadius = 5.0f;
     public float separationDistance = 1.5f;
 
-    private Rigidbody rb; 
 	private List<GameObject> neighbors;
 
 	// Initialization
 	void Start () {
 		neighbors = new List<GameObject>();
-		rb = GetComponent<Rigidbody> ();
 
         // Set initial velocity
         velocity = Vector3.zero; 
 	}
-
-    private void Update()
-    {
-        UpdateNeighbors();
-    }
-
 
     void UpdateNeighbors() {
 
@@ -59,7 +51,7 @@ public class Boid : MonoBehaviour {
     // Alignment:   Steer towards the average heading of local flockmates
     public void Flock() {
 
-		//UpdateNeighbors ();
+        UpdateNeighbors ();
 
         Vector3 cohesionVec = Vector3.zero;
         Vector3 separationVec = Vector3.zero;

@@ -7,10 +7,10 @@ public class FleeDecision : Decision
 {
     public override bool Decide(StateController controller)
     {
-        return Danger(controller);
+        return DangerTest(controller);
     }
 
-    bool Danger(StateController controller)
+    bool DangerTest(StateController controller)
     {
         if(controller.player)
         {

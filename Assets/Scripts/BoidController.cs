@@ -6,9 +6,9 @@ public class BoidController : MonoBehaviour {
 
 	public int flockSize = 10;
 	public float spawnRadius;
-	public GameObject boidPrefab;		// Our boid
+	public GameObject boidPrefab;       // Our boid
 
-	private GameObject[] boids;
+    private GameObject[] boids;
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +24,5 @@ public class BoidController : MonoBehaviour {
 			boid.transform.localPosition = pos;
 			boids[i] = boid;
 		}
-
 	}
 }
